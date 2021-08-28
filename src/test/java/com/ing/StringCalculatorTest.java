@@ -1,7 +1,6 @@
 package com.ing;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -39,6 +38,7 @@ class StringCalculatorTest {
                 arguments("1", 1),
                 arguments("1,2", 3),
                 arguments("1,2,3", 6),
+                arguments("1\n2,3", 6),
                 arguments("1,2,3,4,5,6,7,8,9,10", 55)
         );
     }
