@@ -2,8 +2,14 @@ package com.ing;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class StringCalculatorTest {
 
@@ -14,54 +20,22 @@ class StringCalculatorTest {
         sut = new StringCalculator();
     }
 
-    @Test
-    public void whenNumbersIsEmpty_ThenIsZero() {
-        final String numbers = "";
-        final int expected = 0;
-
+    @ParameterizedTest(name = "#{index} - Sum {0} = {1}")
+    @MethodSource("argumentsNumbersToInt")
+    public void numbersToInt(String numbers, int expected) {
         int result = sut.add(numbers);
 
         assertEquals(expected, result);
     }
 
-    @Test
-    public void whenNumbersHasAUniqueNumber_ThenReturnsTheSameValue() {
-        final String numbers = "1";
-        final int expected = 1;
-
-        int result = sut.add(numbers);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void whenNumbersHasSeven_ThenReturnsTheSameValue() {
-        final String numbers = "7";
-        final int expected = 7;
-
-        int result = sut.add(numbers);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void whenNumbersHasOneAndTwo_ThenReturnsThree() {
-        final String numbers = "1,2";
-        final int expected = 3;
-
-        int result = sut.add(numbers);
-
-        assertEquals(expected, result);
-    }
-
-    @Test
-    public void whenNumbersHasOneTwoTree_ThenReturnsSix() {
-        final String numbers = "1,2,3";
-        final int expected = 6;
-
-        int result = sut.add(numbers);
-
-        assertEquals(expected, result);
+    private static Stream<Arguments> argumentsNumbersToInt() {
+        return Stream.of(
+                arguments("", 0),
+                arguments("0", 0),
+                arguments("1", 1),
+                arguments("1,2", 3),
+                arguments("1,2,3", 6)
+        );
     }
 
 }
