@@ -28,13 +28,18 @@ class StringCalculatorTest {
         assertEquals(expected, result);
     }
 
+    /**
+     *
+     * Partial sum = n*(n+1)/2
+     */
     private static Stream<Arguments> argumentsNumbersToInt() {
         return Stream.of(
                 arguments("", 0),
                 arguments("0", 0),
                 arguments("1", 1),
                 arguments("1,2", 3),
-                arguments("1,2,3", 6)
+                arguments("1,2,3", 6),
+                arguments("1,2,3,4,5,6,7,8,9,10", 55)
         );
     }
 
