@@ -54,4 +54,14 @@ class StringCalculatorTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void whenNumbersHasOneTwoTree_ThenReturnsSix() {
+        final String numbers = "1,2,3";
+        final int expected = 6;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
 }
