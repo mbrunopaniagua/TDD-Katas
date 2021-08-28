@@ -24,4 +24,14 @@ class StringCalculatorTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void whenNumbersHasAUniqueNumber_ThenReturnsTheSameValue() {
+        final String numbers = "1";
+        final int expected = 1;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
 }
