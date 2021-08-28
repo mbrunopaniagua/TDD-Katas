@@ -34,4 +34,24 @@ class StringCalculatorTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void whenNumbersHasSeven_ThenReturnsTheSameValue() {
+        final String numbers = "7";
+        final int expected = 7;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void whenNumbersHasOneAndTwo_ThenReturnsThree() {
+        final String numbers = "1,2";
+        final int expected = 3;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
 }
