@@ -5,11 +5,8 @@ import java.util.stream.Stream;
 public class StringCalculator {
 
     public int add(String numbers) {
-        if ("".equals(numbers)) return 0;
         return Stream.of(numbers.split(","))
-                .mapToInt(Integer::parseInt)
+                .mapToInt(n -> "".equals(n) ? 0 : Integer.parseInt(n))
                 .sum();
-
-
     }
 }
