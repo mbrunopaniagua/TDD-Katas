@@ -8,8 +8,7 @@ public class StringCalculator {
     private final ToIntFunction<String> lambdaFromStringToInt = n -> "".equals(n) ? 0 : Integer.parseInt(n);
     private final IntPredicate lambdaFilter = n -> {
       if (n < 0) throw new IllegalArgumentException("Negatives not allowed: " + n);
-      if (n > 1000) return false;
-      return true;
+      return n <= 1000;
     };
 
     public int add(String numbers) {
