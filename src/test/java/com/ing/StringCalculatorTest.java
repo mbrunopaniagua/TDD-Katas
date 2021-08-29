@@ -55,4 +55,14 @@ class StringCalculatorTest {
         assertTrue(exception.getMessage().contains("Negatives not allowed: " + numbers));
     }
 
+    @Test
+    public void whenNumbersHasANumberBiggerThan1000_ThenMustBeIgnored() {
+        final String numbers = "1,2,1001,3";
+        final int expected = 6;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
 }
