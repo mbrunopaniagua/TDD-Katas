@@ -15,6 +15,10 @@ public class FizzBuzz {
             Collections.replaceAll(numbers, "5", "Buzz");
             return numbers;
         }
+        if (numbers.contains("15")) {
+            Collections.replaceAll(numbers, "15", "FizzBuzz");
+            return numbers;
+        }
         return numbers;
     }
 }
