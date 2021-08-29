@@ -18,9 +18,19 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveJustOneAndTwo_ThenReturnsTheSameList() {
+    public void whenInputNumbersHaveNeitherMultipleOf3Nor5_ThenReturnsTheSameList() {
         final List<String> numbers = Arrays.asList("1","2");
         final List<String> expected = Arrays.asList("1","2");
+
+        List<String> fizzBuzzList = sut.calculate(numbers);
+
+        assertEquals(expected, fizzBuzzList);
+    }
+
+    @Test
+    public void whenInputNumbersHaveAMultipleOf3_ThenReturnsTheSameListWithFizzInstead3() {
+        final List<String> numbers = Arrays.asList("1","2","3");
+        final List<String> expected = Arrays.asList("1","2","Fizz");
 
         List<String> fizzBuzzList = sut.calculate(numbers);
 
