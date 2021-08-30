@@ -3,6 +3,11 @@ package com.ing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,5 +41,22 @@ class DNAPipelineTest {
         boolean isValid = sut.validateDNASequence(dnaSequence);
 
         assertTrue(isValid);
+    }
+
+    @Test
+    public void whenDNASequenceHasNotAllowedNucleotides_ThenThrowsIllegalDNASequenceException() {
+        final String dnaSequence = "B";
+
+        assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
+    }
+
+    @Test
+    public void whenDNAIsRoom_ThenCharSetIsRomç() {
+        final String dna = "ROOM";
+        final Set<Character> expected = new HashSet<>(Arrays.asList('R','O','M'));
+
+        Set<Character> charSet = sut.getCharSet(dna);
+
+        assertEquals(expected, charSet);
     }
 }
