@@ -50,7 +50,7 @@ class FizzBuzzTest {
 
     @Test
     public void whenInputNumbersHaveANumberBothMultipleOf3And5_ThenReturnsTheSameListWithFizzBuzzInsteadTheNumber() {
-        final List<String> numbers = Arrays.asList("15");
+        final List<String> numbers = Collections.singletonList("15");
         final List<String> expected = Collections.singletonList("FizzBuzz");
 
         List<String> fizzBuzzList = sut.calculate(numbers);
