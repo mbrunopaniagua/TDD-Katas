@@ -30,7 +30,7 @@ class FizzBuzzTest {
 
     @Test
     public void whenInputNumbersHaveAMultipleOf3_ThenReturnsTheSameListWithFizzInsteadOfTheNumber() {
-        final List<String> numbers = Arrays.asList("3");
+        final List<String> numbers = Collections.singletonList("3");
         final List<String> expected = Collections.singletonList("Fizz");
 
         List<String> fizzBuzzList = sut.calculate(numbers);
@@ -40,7 +40,7 @@ class FizzBuzzTest {
 
     @Test
     public void whenInputNumbersHaveAMultipleOf5_ThenReturnsTheSameListWithBuzzInsteadOfTheNumber() {
-        final List<String> numbers = Arrays.asList("5");
+        final List<String> numbers = Collections.singletonList("5");
         final List<String> expected = Collections.singletonList("Buzz");
 
         List<String> fizzBuzzList = sut.calculate(numbers);
