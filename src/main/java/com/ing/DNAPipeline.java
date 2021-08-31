@@ -17,4 +17,17 @@ public class DNAPipeline {
     public Set<Character> getCharSet(String dnaSequence) {
         return dnaSequence.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
     }
+
+    public String getAntiSense(String dnaSequence) {
+        if ("A".equals(dnaSequence)) {
+            return "T";
+        }
+        if ("C".equals(dnaSequence)) {
+            return "G";
+        }
+        if ("G".equals(dnaSequence)) {
+            return "C";
+        }
+        return "A";
+    }
 }
