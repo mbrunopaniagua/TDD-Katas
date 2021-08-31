@@ -45,13 +45,13 @@ class DNAPipelineTest {
 
     @Test
     public void whenDNASequenceHasNotAllowedNucleotides_ThenThrowsIllegalDNASequenceException() {
-        final String dnaSequence = "B";
+        final String dnaSequence = "ATCGB";
 
         assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
     }
 
     @Test
-    public void whenDNAIsRoom_ThenCharSetIsRomç() {
+    public void whenDNAIsRoom_ThenCharSetIsRom() {
         final String dna = "ROOM";
         final Set<Character> expected = new HashSet<>(Arrays.asList('R','O','M'));
 
@@ -59,4 +59,6 @@ class DNAPipelineTest {
 
         assertEquals(expected, charSet);
     }
+
+    //calculate antisense sequence
 }
