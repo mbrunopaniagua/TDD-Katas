@@ -99,4 +99,14 @@ class DNAPipelineTest {
 
         assertEquals(expectedAntiSense, antiSense);
     }
+
+    @Test
+    public void givenADNASequenceWithAllNucleotidesWhenGetAntiSense_ThenGetAReversedSequenceWithTheNucleotidesProperlyChanged() {
+        final String dnaSequenceWithJustOneNucleotide = "ATCG";
+        final String expectedAntiSense = "CGAT";
+
+        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
+
+        assertEquals(expectedAntiSense, antiSense);
+    }
 }
