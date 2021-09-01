@@ -12,6 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <pitest-maven.version>1.6.8</pitest-maven.version>
   </properties>
 
   <dependencies>
@@ -75,6 +76,57 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.pitest</groupId>
+          <artifactId>pitest-maven</artifactId>
+          <version>${pitest-maven.version}</version>
+          <configuration>
+            <coverageThreshold>100</coverageThreshold>
+            <mutationThreshold>97</mutationThreshold>
+            <testStrengthThreshold>97</testStrengthThreshold>
+            <threads>4</threads>
+            <historyInputFile>${project.basedir}/pitest.history</historyInputFile>
+            <historyOutputFile>${project.basedir}/pitest.history</historyOutputFile>
+            <avoidCallsTo>
+              <avoidCallsTo>org.slf4j</avoidCallsTo>
+              <avoidCallsTo>org.apache.commons</avoidCallsTo>
+            </avoidCallsTo>
+            <outputFormats>
+              <outputFormat>HTML</outputFormat>
+              <outputFormat>XML</outputFormat>
+            </outputFormats>
+            <targetClasses>
+              <param>com.ing.*</param>
+            </targetClasses>
+            <targetTests>
+              <param>com.ing.*</param>
+            </targetTests>
+            <timestampedReports>false</timestampedReports>
+            <failWhenNoMutations>false</failWhenNoMutations>
+          </configuration>
+          <executions>
+            <execution>
+              <id>pit-report</id>
+              <phase>test</phase>
+              <goals>
+                <goal>mutationCoverage</goal>
+              </goals>
+              <configuration>
+                <historyInputFile>${project.basedir}/pitest.history</historyInputFile>
+                <historyOutputFile>${project.basedir}/pitest.history</historyOutputFile>
+              </configuration>
+            </execution>
+          </executions>
+          <dependencies>
+            <!-- https://github.com/hcoles/pitest/issues/284 -->
+            <!-- Need this to support JUnit 5 -->
+            <dependency>
+              <groupId>org.pitest</groupId>
+              <artifactId>pitest-junit5-plugin</artifactId>
+              <version>0.14</version>
+            </dependency>
+          </dependencies>
         </plugin>
       </plugins>
     </pluginManagement>
