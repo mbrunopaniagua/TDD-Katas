@@ -64,11 +64,22 @@ class DNAPipelineTest {
 
     @Test
     public void givenADnaSequenceWithAllNucleotidesWhenGetAntiSenseThenGetAReversedSequenceWithTheNucleotidesProperlyChanged() {
-        final String dnaSequenceWithJustOneNucleotide = "ATCG";
+        final String dnaSequence = "ATCG";
         final String expectedAntiSense = "CGAT";
 
-        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
+        String antiSense = sut.getAntiSense(dnaSequence);
 
         assertEquals(expectedAntiSense, antiSense);
     }
+
+    @Test
+    public void givenADnaSequenceWithAnAdenineNucleotideWhenTranscribeThenReturnsASequenceWithUracil() {
+        final String dnaSequenceWithAdenine = "A";
+        final String rnaSequenceExpected = "U";
+
+        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
+
+        assertEquals(rnaSequenceExpected, rnaSequence);
+    }
+
 }

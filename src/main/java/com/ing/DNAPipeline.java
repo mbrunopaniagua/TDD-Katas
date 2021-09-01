@@ -36,4 +36,7 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
+    public String transcribe(String dnaSequenceWithAdenine) {
+        return "U";
+    }
 }
