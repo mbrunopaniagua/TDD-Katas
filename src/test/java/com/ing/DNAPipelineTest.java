@@ -71,47 +71,7 @@ class DNAPipelineTest {
 
         assertEquals(expectedAntiSense, antiSense);
     }
-
-    @Test
-    public void givenADnaSequenceWithAnAdenineNucleotideWhenTranscribeThenReturnsASequenceWithUracil() {
-        final String dnaSequenceWithAdenine = "A";
-        final String rnaSequenceExpected = "U";
-
-        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
-
-        assertEquals(rnaSequenceExpected, rnaSequence);
-    }
-
-    @Test
-    public void givenADnaSequenceWithAThymineNucleotideWhenTranscribeThenReturnsASequenceWithAdenine() {
-        final String dnaSequenceWithAdenine = "T";
-        final String rnaSequenceExpected = "A";
-
-        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
-
-        assertEquals(rnaSequenceExpected, rnaSequence);
-    }
-
-    @Test
-    public void givenADnaSequenceWithACytosineNucleotideWhenTranscribeThenReturnsASequenceWithGuanine() {
-        final String dnaSequenceWithAdenine = "C";
-        final String rnaSequenceExpected = "G";
-
-        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
-
-        assertEquals(rnaSequenceExpected, rnaSequence);
-    }
-
-    @Test
-    public void givenADnaSequenceWithAGuanineNucleotideWhenTranscribeThenReturnsASequenceWithCytosine() {
-        final String dnaSequenceWithAdenine = "G";
-        final String rnaSequenceExpected = "C";
-
-        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
-
-        assertEquals(rnaSequenceExpected, rnaSequence);
-    }
-
+    
     @Test
     public void givenADnaSequenceWithAllNucleotidesThenReturnsAReverseSequenceWhenIsTranscribed() {
         final String dnaSequenceWithAdenine = "TTATGCATC";
