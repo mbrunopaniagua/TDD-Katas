@@ -71,7 +71,7 @@ class DNAPipelineTest {
 
         assertEquals(expectedAntiSense, antiSense);
     }
-    
+
     @Test
     public void givenADnaSequenceWithAllNucleotidesThenReturnsAReverseSequenceWhenIsTranscribed() {
         final String dnaSequenceWithAdenine = "TTATGCATC";
