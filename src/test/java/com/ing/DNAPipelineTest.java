@@ -61,46 +61,6 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void givenADNASequenceJustWithTheNucleotideAWhenGetAntiSense_ThenGetASequenceWithTheNucleotideT() {
-        final String dnaSequenceWithJustOneNucleotide = "A";
-        final String expectedAntiSense = "T";
-
-        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
-
-        assertEquals(expectedAntiSense, antiSense);
-    }
-
-    @Test
-    public void givenADNASequenceJustWithTheNucleotideTWhenGetAntiSense_ThenGetASequenceWithTheNucleotideA() {
-        final String dnaSequenceWithJustOneNucleotide = "T";
-        final String expectedAntiSense = "A";
-
-        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
-
-        assertEquals(expectedAntiSense, antiSense);
-    }
-
-    @Test
-    public void givenADNASequenceJustWithTheNucleotideCWhenGetAntiSense_ThenGetASequenceWithTheNucleotideG() {
-        final String dnaSequenceWithJustOneNucleotide = "C";
-        final String expectedAntiSense = "G";
-
-        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
-
-        assertEquals(expectedAntiSense, antiSense);
-    }
-
-    @Test
-    public void givenADNASequenceJustWithTheNucleotideGWhenGetAntiSense_ThenGetASequenceWithTheNucleotideC() {
-        final String dnaSequenceWithJustOneNucleotide = "G";
-        final String expectedAntiSense = "C";
-
-        String antiSense = sut.getAntiSense(dnaSequenceWithJustOneNucleotide);
-
-        assertEquals(expectedAntiSense, antiSense);
-    }
-
-    @Test
     public void givenADNASequenceWithAllNucleotidesWhenGetAntiSense_ThenGetAReversedSequenceWithTheNucleotidesProperlyChanged() {
         final String dnaSequenceWithJustOneNucleotide = "ATCG";
         final String expectedAntiSense = "CGAT";
