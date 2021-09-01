@@ -67,7 +67,7 @@ class DNAPipelineTest {
         final String dnaSequence = "ATCG";
         final String expectedAntiSense = "CGAT";
 
-        String antiSense = sut.getAntiSense(dnaSequence);
+        String antiSense = sut.antiSense(dnaSequence);
 
         assertEquals(expectedAntiSense, antiSense);
     }
@@ -106,6 +106,16 @@ class DNAPipelineTest {
     public void givenADnaSequenceWithAGuanineNucleotideWhenTranscribeThenReturnsASequenceWithCytosine() {
         final String dnaSequenceWithAdenine = "G";
         final String rnaSequenceExpected = "C";
+
+        String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
+
+        assertEquals(rnaSequenceExpected, rnaSequence);
+    }
+
+    @Test
+    public void givenADnaSequenceWithAllNucleotidesThenReturnsAReverseSequenceWhenIsTranscribed() {
+        final String dnaSequenceWithAdenine = "TTATGCATC";
+        final String rnaSequenceExpected = "GAUGCAUAA";
 
         String rnaSequence = sut.transcribe(dnaSequenceWithAdenine);
 

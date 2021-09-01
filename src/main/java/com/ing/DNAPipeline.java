@@ -3,15 +3,24 @@ package com.ing;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class DNAPipeline {
-    private static final Map<Character, Character> RELATIONSHIP_BETWEEN_NUCLEOTIDES = new HashMap<>();
+    private static final Map<Character, Character> RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE = new HashMap<>();
     static {
-        RELATIONSHIP_BETWEEN_NUCLEOTIDES.put('A', 'T');
-        RELATIONSHIP_BETWEEN_NUCLEOTIDES.put('T', 'A');
-        RELATIONSHIP_BETWEEN_NUCLEOTIDES.put('C', 'G');
-        RELATIONSHIP_BETWEEN_NUCLEOTIDES.put('G', 'C');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.put('A', 'T');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.put('T', 'A');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.put('C', 'G');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.put('G', 'C');
+    }
+
+    private static final Map<Character, Character> RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE = new HashMap<>();
+    static {
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE.put('A', 'U');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE.put('T', 'A');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE.put('C', 'G');
+        RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE.put('G', 'C');
     }
 
     public boolean validateDNASequence(String dnaSequence) throws IllegalDNASequenceException {
@@ -20,32 +29,27 @@ public class DNAPipeline {
         return true;
     }
 
-    private Set<Character> getAllowedNucleotides() {
-        return RELATIONSHIP_BETWEEN_NUCLEOTIDES.keySet();
-    }
-
     public Set<Character> getNucleotides(String dnaSequence) {
         return dnaSequence.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
     }
 
-    public String getAntiSense(String dnaSequence) {
-        return new StringBuilder(dnaSequence.toUpperCase()).reverse().chars()
-                .mapToObj(c -> (char)c)
-                .map(RELATIONSHIP_BETWEEN_NUCLEOTIDES::get)
-                .map(String::valueOf)
-                .collect(Collectors.joining());
+    public String antiSense(String dnaSequence) {
+        return translateReversedSequenceFromFunction(dnaSequence, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE::get);
     }
 
     public String transcribe(String dnaSequence) {
-        if ("A".equals(dnaSequence)) {
-            return "U";
-        }
-        if ("T".equals(dnaSequence)) {
-            return "A";
-        }
-        if ("C".equals(dnaSequence)) {
-            return "G";
-        }
-        return "C";
+        return translateReversedSequenceFromFunction(dnaSequence, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE::get);
+    }
+
+    private Set<Character> getAllowedNucleotides() {
+        return RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.keySet();
+    }
+
+    private String translateReversedSequenceFromFunction(String dnaSequence, Function<Character,Character> translationFunction) {
+        return new StringBuilder(dnaSequence.toUpperCase()).reverse().chars()
+                .mapToObj(c -> (char)c)
+                .map(translationFunction)
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 }
