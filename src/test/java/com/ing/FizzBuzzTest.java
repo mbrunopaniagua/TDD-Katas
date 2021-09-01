@@ -1,6 +1,7 @@
 package com.ing;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayNameGeneration(CustomDisplayNameGenerator.ReplaceCamelCase.class)
 class FizzBuzzTest {
 
     private FizzBuzz sut;
@@ -19,7 +21,7 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveNeitherMultipleOf3Nor5_ThenReturnsTheSameList() {
+    public void givenAListWithoutMultipleOf3Nor5WhenCalculateFizzBuzzThenReturnsTheSameList() {
         final List<String> numbers = Arrays.asList("1","2");
         final List<String> expected = Arrays.asList("1","2");
 
@@ -29,7 +31,7 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveAMultipleOf3_ThenReturnsTheSameListWithFizzInsteadOfTheNumber() {
+    public void givenAListWithANumberMultipleOf3WhenCalculateFizzBuzzThenReturnsTheSameListWithFizzInsteadOfTheNumber() {
         final List<String> numbers = Collections.singletonList("3");
         final List<String> expected = Collections.singletonList("Fizz");
 
@@ -39,7 +41,7 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveAMultipleOf5_ThenReturnsTheSameListWithBuzzInsteadOfTheNumber() {
+    public void givenAListWithANumberMultipleOf5WhenCalculateFizzBuzzThenReturnsTheSameListWithBuzzInsteadOfTheNumber() {
         final List<String> numbers = Collections.singletonList("5");
         final List<String> expected = Collections.singletonList("Buzz");
 
@@ -49,7 +51,7 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveANumberBothMultipleOf3And5_ThenReturnsTheSameListWithFizzBuzzInsteadTheNumber() {
+    public void givenAListWithANumberBothMultipleOf3And5WhenCalculateFizzBuzzThenReturnsTheSameListWithFizzBuzzInsteadTheNumber() {
         final List<String> numbers = Collections.singletonList("15");
         final List<String> expected = Collections.singletonList("FizzBuzz");
 
@@ -59,7 +61,7 @@ class FizzBuzzTest {
     }
 
     @Test
-    public void whenInputNumbersHaveAllCases_ThenReturnsTheSameListWithFizzAndBuzzAndFizzBuzzInsteadTheNumber() {
+    public void givenAListFrom1To15WhenCalculateFizzBuzzThenReturnsTheSameListWithFizzAndBuzzAndFizzBuzzInsteadTheNumber() {
         final List<String> numbers = Arrays.asList("1","2","3","4","5","6","7","8","9","10","11","12","13","14","15");
         final List<String> expected = Arrays.asList("1","2","Fizz","4","Buzz","Fizz","7","8","Fizz","Buzz","11","Fizz","13","14","FizzBuzz");
 

@@ -16,7 +16,7 @@ public class DNAPipeline {
 
     public boolean validateDNASequence(String dnaSequence) throws IllegalDNASequenceException {
         if (dnaSequence == null || "".equals(dnaSequence)
-                || !getAllowedNucleotides().containsAll(getCharSet(dnaSequence))) throw new IllegalDNASequenceException();
+                || !getAllowedNucleotides().containsAll(getNucleotides(dnaSequence))) throw new IllegalDNASequenceException();
         return true;
     }
 
@@ -24,7 +24,7 @@ public class DNAPipeline {
         return RELATIONSHIP_BETWEEN_NUCLEOTIDES.keySet();
     }
 
-    public Set<Character> getCharSet(String dnaSequence) {
+    public Set<Character> getNucleotides(String dnaSequence) {
         return dnaSequence.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
     }
 

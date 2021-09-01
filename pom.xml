@@ -83,15 +83,11 @@
           <version>${pitest-maven.version}</version>
           <configuration>
             <coverageThreshold>100</coverageThreshold>
-            <mutationThreshold>97</mutationThreshold>
-            <testStrengthThreshold>97</testStrengthThreshold>
+            <mutationThreshold>100</mutationThreshold>
+            <testStrengthThreshold>100</testStrengthThreshold>
             <threads>4</threads>
             <historyInputFile>${project.basedir}/pitest.history</historyInputFile>
             <historyOutputFile>${project.basedir}/pitest.history</historyOutputFile>
-            <avoidCallsTo>
-              <avoidCallsTo>org.slf4j</avoidCallsTo>
-              <avoidCallsTo>org.apache.commons</avoidCallsTo>
-            </avoidCallsTo>
             <outputFormats>
               <outputFormat>HTML</outputFormat>
               <outputFormat>XML</outputFormat>

@@ -1,6 +1,7 @@
 package com.ing;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,9 +11,10 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@DisplayNameGeneration(CustomDisplayNameGenerator.ReplaceCamelCase.class)
 class StringCalculatorTest {
 
     private StringCalculator sut;
@@ -47,17 +49,27 @@ class StringCalculatorTest {
     }
 
     @Test
-    public void whenNumbersHasANegativeNumber_ThenThrowsException() {
-        final String numbers = "-1";
+    public void givenAListOfNumbersWithANegativeValueWhenAddAllOfThemThenThrowsException() {
+        final String numbers = "-1,0,1,2";
 
         Exception exception = assertThrows(IllegalArgumentException.class, () -> sut.add(numbers));
-        assertTrue(exception.getMessage().contains("Negatives not allowed: " + numbers));
+        assertEquals("Negatives not allowed: -1", exception.getMessage());
     }
 
     @Test
-    public void whenNumbersHasANumberBiggerThan1000_ThenMustBeIgnored() {
+    public void givenAListOfNumbersWithAValueBiggerThan1000WhenAddAllOfThemThenMustBeIgnoredThatValue() {
         final String numbers = "1,2,1001,3";
         final int expected = 6;
+
+        int result = sut.add(numbers);
+
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void givenAListOfNumbersWithAValueLessOrEqualsThan1000WhenAddAllOfThemThenMustNotBeIgnoredThatValue() {
+        final String numbers = "1,2,1000,3";
+        final int expected = 1006;
 
         int result = sut.add(numbers);
 

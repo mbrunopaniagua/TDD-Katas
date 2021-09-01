@@ -1,6 +1,7 @@
 package com.ing;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@DisplayNameGeneration(CustomDisplayNameGenerator.ReplaceCamelCase.class)
 class DNAPipelineTest {
 
     private DNAPipeline sut;
@@ -21,21 +23,21 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void whenDNASequenceIsNull_ThenThrowsIllegalDNASequenceException() {
+    public void givenANullDnaSequenceWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
         final String dnaSequence = null;
 
         assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
     }
 
     @Test
-    public void whenDNASequenceIsEmpty_ThenThrowsIllegalDNASequenceException() {
+    public void givenAnEmptyDnaSequenceWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
         final String dnaSequence = "";
 
         assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
     }
 
     @Test
-    public void whenDNASequenceHasAllowedNucleotides_ThenReturnsTrue() throws IllegalDNASequenceException {
+    public void givenADnaSequenceWithAllAllowedNucleotidesWhenValidateItThenIsValid() throws IllegalDNASequenceException {
         final String dnaSequence = "ATCG";
 
         boolean isValid = sut.validateDNASequence(dnaSequence);
@@ -44,24 +46,24 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void whenDNASequenceHasNotAllowedNucleotides_ThenThrowsIllegalDNASequenceException() {
+    public void givenAnDnaSequenceWithSomeNotAllowedNucleotideWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
         final String dnaSequence = "ATCGB";
 
         assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
     }
 
     @Test
-    public void whenDNAIsRoom_ThenCharSetIsRom() {
-        final String dna = "ROOM";
-        final Set<Character> expected = new HashSet<>(Arrays.asList('R','O','M'));
+    public void givenADnaSequenceWithRepeatedNucleotidesWhenGetNucleotidesThenGetsASetNucleotides() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final Set<Character> expectedNucleotides = new HashSet<>(Arrays.asList('T','A','G','C'));
 
-        Set<Character> charSet = sut.getCharSet(dna);
+        Set<Character> nucleotides = sut.getNucleotides(dnaSequence);
 
-        assertEquals(expected, charSet);
+        assertEquals(expectedNucleotides, nucleotides);
     }
 
     @Test
-    public void givenADNASequenceWithAllNucleotidesWhenGetAntiSense_ThenGetAReversedSequenceWithTheNucleotidesProperlyChanged() {
+    public void givenADnaSequenceWithAllNucleotidesWhenGetAntiSenseThenGetAReversedSequenceWithTheNucleotidesProperlyChanged() {
         final String dnaSequenceWithJustOneNucleotide = "ATCG";
         final String expectedAntiSense = "CGAT";
 
