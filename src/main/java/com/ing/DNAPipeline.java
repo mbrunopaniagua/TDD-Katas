@@ -108,10 +108,10 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
-    public List<String> codons(String rnaSequence) {
+    public String codons(String rnaSequence) {
         return Arrays.stream(rnaSequence.split("(?<=\\G...)"))
                 .filter(codon -> codon.length() == 3)
-                .collect(Collectors.toList());
+                .collect(Collectors.joining("-"));
     }
 
     public String toPeptide(String codon) {
@@ -123,13 +123,13 @@ public class DNAPipeline {
 
     public String toProtein(String dnaSequence) {
         final String rna = transcribe(dnaSequence);
-        return codons(rna).stream()
+        return Arrays.stream(codons(rna).split("-"))
                 .map(this::toPeptide)
                 .map(PEPTIDES::get)
                 .collect(Collectors.joining());
     }
 
-    public List<String> codonsByFrame(String dnaSequence, int frame) {
+    public String codonsByFrame(String dnaSequence, int frame) {
         final String dnaSequenceByFrame = dnaSequence.substring(frame-1);
         return codons(dnaSequenceByFrame);
     }
