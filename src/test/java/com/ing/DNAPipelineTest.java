@@ -128,16 +128,6 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAProtein() {
-        final String dnaSequence = "TTATTTGGGCATCC";
-        final String expectedProtein = "GCPN";
-
-        String protein = sut.toProtein(dnaSequence);
-
-        assertEquals(expectedProtein, protein);
-    }
-
-    @Test
     public void givenADnaSequenceWhenDivideItInCodonsByFrame1ThenIsNotDiscardedAnyNucleotideBeforeDivision() {
         final String dnaSequence = "TTATTTGGGCATCC";
         final List<String> expectedCodons = Arrays.asList("TTA", "TTT", "GGG","CAT");
@@ -146,6 +136,38 @@ class DNAPipelineTest {
         List<String> codons = sut.codonsByFrame(dnaSequence, frame);
 
         assertEquals(expectedCodons, codons);
+    }
+
+    @Test
+    public void givenADnaSequenceWhenDivideItInCodonsByFrame2ThenIsDiscardedTheFirstNucleotideBeforeDivision() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final List<String> expectedCodons = Arrays.asList("TAT","TTG","GGC","ATC");
+        final int frame = 2;
+
+        List<String> codons = sut.codonsByFrame(dnaSequence, frame);
+
+        assertEquals(expectedCodons, codons);
+    }
+
+    @Test
+    public void givenADnaSequenceWhenDivideItInCodonsByFrame3ThenIsDiscardedTheFirstTwoNucleotidesBeforeDivision() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final List<String> expectedCodons = Arrays.asList("ATT","TGG","GCA","TCC");
+        final int frame = 3;
+
+        List<String> codons = sut.codonsByFrame(dnaSequence, frame);
+
+        assertEquals(expectedCodons, codons);
+    }
+
+    @Test
+    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAProtein() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final String expectedProtein = "GCPN";
+
+        String protein = sut.toProtein(dnaSequence);
+
+        assertEquals(expectedProtein, protein);
     }
 
     @ParameterizedTest(name = "#{index} - Codon \"{0}\" = Peptide \"{1}\"")

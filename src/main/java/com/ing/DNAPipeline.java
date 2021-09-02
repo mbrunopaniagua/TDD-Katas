@@ -130,6 +130,7 @@ public class DNAPipeline {
     }
 
     public List<String> codonsByFrame(String dnaSequence, int frame) {
-        return codons(dnaSequence);
+        final String dnaSequenceByFrame = dnaSequence.substring(frame-1);
+        return codons(dnaSequenceByFrame);
     }
 }
