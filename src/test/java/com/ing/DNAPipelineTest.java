@@ -15,8 +15,6 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @DisplayNameGeneration(CustomDisplayNameGenerator.ReplaceCamelCase.class)
@@ -30,33 +28,43 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void givenANullDnaSequenceWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
+    public void givenANullDnaSequenceThenIsNotValid() {
         final String dnaSequence = null;
+        final boolean expectedIsValid = false;
 
-        assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
+        boolean isValid = sut.isValid(dnaSequence);
+
+        assertEquals(expectedIsValid, isValid);
     }
 
     @Test
-    public void givenAnEmptyDnaSequenceWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
+    public void givenAnEmptyDnaSequenceThenIsNotValid() {
         final String dnaSequence = "";
+        final boolean expectedIsValid = false;
 
-        assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
+        boolean isValid = sut.isValid(dnaSequence);
+
+        assertEquals(expectedIsValid, isValid);
     }
 
     @Test
-    public void givenADnaSequenceWithAllAllowedNucleotidesWhenValidateItThenIsValid() throws IllegalDNASequenceException {
+    public void givenADnaSequenceWithAllAllowedNucleotidesThenIsValid() {
         final String dnaSequence = "ATCG";
+        final boolean expectedIsValid = true;
 
-        boolean isValid = sut.validateDNASequence(dnaSequence);
+        boolean isValid = sut.isValid(dnaSequence);
 
-        assertTrue(isValid);
+        assertEquals(expectedIsValid, isValid);
     }
 
     @Test
-    public void givenAnDnaSequenceWithSomeNotAllowedNucleotideWhenValidateItThenThrowsAnIllegalDnaSequenceException() {
+    public void givenAnDnaSequenceWithSomeNotAllowedNucleotideThenIsNotValid() {
         final String dnaSequence = "ATCGB";
+        final boolean expectedIsValid = false;
 
-        assertThrows(IllegalDNASequenceException.class, () -> sut.validateDNASequence(dnaSequence));
+        boolean isValid = sut.isValid(dnaSequence);
+
+        assertEquals(expectedIsValid, isValid);
     }
 
     @Test

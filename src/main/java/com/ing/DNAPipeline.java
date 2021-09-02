@@ -78,10 +78,9 @@ public class DNAPipeline {
     }
 
 
-    public boolean validateDNASequence(String dnaSequence) throws IllegalDNASequenceException {
-        if (dnaSequence == null || "".equals(dnaSequence)
-                || !getAllowedNucleotides().containsAll(getNucleotides(dnaSequence))) throw new IllegalDNASequenceException();
-        return true;
+    public boolean isValid(String dnaSequence) {
+        return dnaSequence != null && !"".equals(dnaSequence)
+                && getAllowedNucleotides().containsAll(getNucleotides(dnaSequence));
     }
 
     public Set<Character> getNucleotides(String dnaSequence) {
