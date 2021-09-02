@@ -127,6 +127,16 @@ class DNAPipelineTest {
         assertEquals(expectedCodons, codons);
     }
 
+    @Test
+    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAListOfPeptides() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final List<String> expectedPeptides = Arrays.asList("G","C","P","N");
+
+        List<String> peptides = sut.toProtein(dnaSequence);
+
+        assertEquals(expectedPeptides, peptides);
+    }
+
     @ParameterizedTest(name = "#{index} - Codon \"{0}\" = Peptide \"{1}\"")
     @MethodSource("argumentsFromCodonToPeptide")
     public void codonsToPeptide(String codon, String expectedPeptide) {

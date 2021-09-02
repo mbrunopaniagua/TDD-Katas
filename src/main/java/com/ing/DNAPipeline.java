@@ -119,4 +119,12 @@ public class DNAPipeline {
                 .map(PEPTIDE_BY_CODONS::get)
                 .collect(Collectors.joining());
     }
+
+    public List<String> toProtein(String dnaSequence) {
+        final String rna = transcribe(dnaSequence);
+        return codons(rna).stream()
+                .map(this::toPeptide)
+                .map(PEPTIDES::get)
+                .collect(Collectors.toList());
+    }
 }
