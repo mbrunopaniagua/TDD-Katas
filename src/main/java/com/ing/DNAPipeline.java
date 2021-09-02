@@ -79,37 +79,37 @@ public class DNAPipeline {
     }
 
 
-    public boolean isValid(String dnaSequence) {
-        return dnaSequence != null && !"".equals(dnaSequence)
-                && getAllowedNucleotides().containsAll(getNucleotides(dnaSequence));
+    public boolean isValid(String dna) {
+        return dna != null && !"".equals(dna)
+                && getAllowedNucleotides().containsAll(getNucleotides(dna));
     }
 
-    public Set<Character> getNucleotides(String dnaSequence) {
-        return dnaSequence.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
+    public Set<Character> getNucleotides(String dna) {
+        return dna.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
     }
 
-    public String antiSense(String dnaSequence) {
-        return translateReversedSequenceFromFunction(dnaSequence, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE::get);
+    public String antiSense(String dna) {
+        return translateReversedSequenceFromFunction(dna, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE::get);
     }
 
-    public String transcribe(String dnaSequence) {
-        return translateReversedSequenceFromFunction(dnaSequence, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE::get);
+    public String transcribe(String dna) {
+        return translateReversedSequenceFromFunction(dna, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE::get);
     }
 
     private Set<Character> getAllowedNucleotides() {
         return RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE.keySet();
     }
 
-    private String translateReversedSequenceFromFunction(String dnaSequence, Function<Character,Character> translationFunction) {
-        return new StringBuilder(dnaSequence.toUpperCase()).reverse().chars()
+    private String translateReversedSequenceFromFunction(String dna, Function<Character,Character> translationFunction) {
+        return new StringBuilder(dna.toUpperCase()).reverse().chars()
                 .mapToObj(c -> (char)c)
                 .map(translationFunction)
                 .map(String::valueOf)
                 .collect(Collectors.joining());
     }
 
-    public String codons(String rnaSequence) {
-        return Arrays.stream(rnaSequence.split("(?<=\\G...)"))
+    public String codons(String rna) {
+        return Arrays.stream(rna.split("(?<=\\G...)"))
                 .filter(codon -> codon.length() == 3)
                 .collect(Collectors.joining("-"));
     }
@@ -121,16 +121,16 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
-    public String toProtein(String dnaSequence) {
-        final String rna = transcribe(dnaSequence);
+    public String toProtein(String dna) {
+        final String rna = transcribe(dna);
         return Arrays.stream(codons(rna).split("-"))
                 .map(this::toPeptide)
                 .map(PEPTIDES::get)
                 .collect(Collectors.joining());
     }
 
-    public String codonsByFrame(String dnaSequence, int frame) {
-        final String dnaSequenceByFrame = dnaSequence.substring(frame-1);
+    public String codonsByFrame(String dna, int frame) {
+        final String dnaSequenceByFrame = dna.substring(frame-1);
         return codons(dnaSequenceByFrame);
     }
 }
