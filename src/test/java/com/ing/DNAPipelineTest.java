@@ -5,7 +5,9 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -82,4 +84,33 @@ class DNAPipelineTest {
         assertEquals(rnaSequenceExpected, rnaSequence);
     }
 
+    @Test
+    public void givenARnaSequenceComposedBy3NucleotidesWhenDivideItInCodonsThenReturnsASingletonList() {
+        final String rnaSequence = "GAU";
+        final List<String> expectedCodons = Collections.singletonList("GAU");
+
+        List<String> codons = sut.codons(rnaSequence);
+
+        assertEquals(expectedCodons, codons);
+    }
+
+    @Test
+    public void givenARnaSequenceComposedBy6NucleotidesWhenDivideItInCodonsThenReturnsATwoCodons() {
+        final String rnaSequence = "GAUAUC";
+        final List<String> expectedCodons = Arrays.asList("GAU", "AUC");
+
+        List<String> codons = sut.codons(rnaSequence);
+
+        assertEquals(expectedCodons, codons);
+    }
+
+    @Test
+    public void givenARnaSequenceComposedBy8NucleotidesWhenDivideItInCodonsThenReturns2CodonsAndTheLast2NucleotidesAreDiscarded() {
+        final String rnaSequence = "GAUAUCAA";
+        final List<String> expectedCodons = Arrays.asList("GAU", "AUC");
+
+        List<String> codons = sut.codons(rnaSequence);
+
+        assertEquals(expectedCodons, codons);
+    }
 }
