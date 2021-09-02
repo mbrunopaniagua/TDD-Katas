@@ -113,4 +113,11 @@ public class DNAPipeline {
                 .filter(codon -> codon.length() == 3)
                 .collect(Collectors.toList());
     }
+
+    public String toPeptide(String codon) {
+        return PEPTIDE_BY_CODONS.keySet().stream()
+                .filter(codons -> codons.contains(codon))
+                .map(PEPTIDE_BY_CODONS::get)
+                .collect(Collectors.joining());
+    }
 }

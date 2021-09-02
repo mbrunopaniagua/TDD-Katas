@@ -113,4 +113,14 @@ class DNAPipelineTest {
 
         assertEquals(expectedCodons, codons);
     }
+
+    @Test
+    public void givenACodonWhenCalculatePeptideThenReturnsThePeptideRelated() {
+        final String codon = "UUU";
+        final String expectedPeptide = "Phe";
+
+        String peptide = sut.toPeptide(codon);
+
+        assertEquals(expectedPeptide, peptide);
+    }
 }
