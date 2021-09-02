@@ -71,6 +71,7 @@ public class DNAPipeline {
         PEPTIDES.put("Phe","F");
         PEPTIDES.put("Pro","P");
         PEPTIDES.put("Ser","S");
+        PEPTIDES.put("Stop","-");
         PEPTIDES.put("Thr","T");
         PEPTIDES.put("Trp","W");
         PEPTIDES.put("Tyr","Y");
@@ -120,11 +121,11 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
-    public List<String> toProtein(String dnaSequence) {
+    public String toProtein(String dnaSequence) {
         final String rna = transcribe(dnaSequence);
         return codons(rna).stream()
                 .map(this::toPeptide)
                 .map(PEPTIDES::get)
-                .collect(Collectors.toList());
+                .collect(Collectors.joining());
     }
 }

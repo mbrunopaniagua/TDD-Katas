@@ -128,13 +128,13 @@ class DNAPipelineTest {
     }
 
     @Test
-    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAListOfPeptides() {
+    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAProtein() {
         final String dnaSequence = "TTATTTGGGCATCC";
-        final List<String> expectedPeptides = Arrays.asList("G","C","P","N");
+        final String expectedProtein = "GCPN";
 
-        List<String> peptides = sut.toProtein(dnaSequence);
+        String protein = sut.toProtein(dnaSequence);
 
-        assertEquals(expectedPeptides, peptides);
+        assertEquals(expectedProtein, protein);
     }
 
     @ParameterizedTest(name = "#{index} - Codon \"{0}\" = Peptide \"{1}\"")
