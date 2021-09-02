@@ -137,6 +137,17 @@ class DNAPipelineTest {
         assertEquals(expectedProtein, protein);
     }
 
+    @Test
+    public void givenADnaSequenceWhenDivideItInCodonsByFrame1ThenIsNotDiscardedAnyNucleotideBeforeDivision() {
+        final String dnaSequence = "TTATTTGGGCATCC";
+        final List<String> expectedCodons = Arrays.asList("TTA", "TTT", "GGG","CAT");
+        final int frame = 1;
+
+        List<String> codons = sut.codonsByFrame(dnaSequence, frame);
+
+        assertEquals(expectedCodons, codons);
+    }
+
     @ParameterizedTest(name = "#{index} - Codon \"{0}\" = Peptide \"{1}\"")
     @MethodSource("argumentsFromCodonToPeptide")
     public void codonsToPeptide(String codon, String expectedPeptide) {

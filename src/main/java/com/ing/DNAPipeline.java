@@ -128,4 +128,8 @@ public class DNAPipeline {
                 .map(PEPTIDES::get)
                 .collect(Collectors.joining());
     }
+
+    public List<String> codonsByFrame(String dnaSequence, int frame) {
+        return codons(dnaSequence);
+    }
 }
