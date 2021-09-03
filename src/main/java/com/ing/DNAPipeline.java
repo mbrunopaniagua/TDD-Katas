@@ -80,21 +80,31 @@ public class DNAPipeline {
         PEPTIDES.put("Val","V");
     }
 
+    public List<String> toPolypeptides(String dna) throws IllegalDNAException {
+        if (!isValid(dna)) throw new IllegalDNAException();
 
-    public boolean isValid(String dna) {
+        final String antiSense = antiSense(dna);
+        final String rnaFromAntisense = transcribe(antiSense);
+        final String rnaFromDna = transcribe(dna);
+        List<String> polypeptidesFromAntisense = toPolypeptidesByFrame(rnaFromAntisense);
+        List<String> polypeptidesFromRna = toPolypeptidesByFrame(rnaFromDna);
+        return Stream.of(polypeptidesFromAntisense, polypeptidesFromRna).flatMap(Collection::stream).collect(Collectors.toList());
+    }
+
+    private boolean isValid(String dna) {
         return dna != null && !"".equals(dna)
                 && getAllowedNucleotides().containsAll(getNucleotides(dna));
     }
 
-    public Set<Character> getNucleotides(String dna) {
+    private Set<Character> getNucleotides(String dna) {
         return dna.chars().mapToObj(c -> (char)c).collect(Collectors.toSet());
     }
 
-    public String antiSense(String dna) {
+    private String antiSense(String dna) {
         return translateReversedSequenceFromFunction(dna, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE::get);
     }
 
-    public String transcribe(String dna) {
+    private String transcribe(String dna) {
         return translateReversedSequenceFromFunction(dna, RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_TRANSCRIBE::get);
     }
 
@@ -110,28 +120,6 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
-    public List<String> codons(String rna) {
-        return Arrays.stream(rna.split("(?<=\\G...)"))
-                .filter(codon -> codon.length() == 3)
-                .collect(Collectors.toList());
-    }
-
-    public String fromCodonToPeptide(String codon) {
-        return PEPTIDE_BY_CODONS.keySet().stream()
-                .filter(codons -> codons.contains(codon))
-                .map(PEPTIDE_BY_CODONS::get)
-                .collect(Collectors.joining());
-    }
-
-    public List<String> toPolypeptides(String dna) {
-        final String antiSense = antiSense(dna);
-        final String rnaFromAntisense = transcribe(antiSense);
-        final String rnaFromDna = transcribe(dna);
-        List<String> polypeptidesFromAntisense = toPolypeptidesByFrame(rnaFromAntisense);
-        List<String> polypeptidesFromRna = toPolypeptidesByFrame(rnaFromDna);
-        return Stream.of(polypeptidesFromAntisense, polypeptidesFromRna).flatMap(Collection::stream).collect(Collectors.toList());
-    }
-
     private List<String> toPolypeptidesByFrame(String sequence) {
         return Stream.of(1, 2, 3)
                 .map(frame -> sequenceCodonSplitting(sequence, frame))
@@ -144,8 +132,21 @@ public class DNAPipeline {
         return polypeptide.stream().map(PEPTIDES::get).collect(Collectors.joining());
     }
 
-    public List<String> sequenceCodonSplitting(String dna, int frame) {
+    private String fromCodonToPeptide(String codon) {
+        return PEPTIDE_BY_CODONS.keySet().stream()
+                .filter(codons -> codons.contains(codon))
+                .map(PEPTIDE_BY_CODONS::get)
+                .collect(Collectors.joining());
+    }
+
+    private List<String> sequenceCodonSplitting(String dna, int frame) {
         final String dnaSequenceByFrame = dna.substring(frame-1);
         return codons(dnaSequenceByFrame);
+    }
+
+    private List<String> codons(String rna) {
+        return Arrays.stream(rna.split("(?<=\\G...)"))
+                .filter(codon -> codon.length() == 3)
+                .collect(Collectors.toList());
     }
 }
