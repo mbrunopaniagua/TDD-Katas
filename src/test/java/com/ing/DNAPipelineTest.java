@@ -8,6 +8,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,9 +100,9 @@ class DNAPipelineTest {
     @Test
     public void givenARnaSequenceComposedBy3NucleotidesWhenDivideItInCodonsThenReturnsASingletonList() {
         final String rnaSequence = "GAU";
-        final String expectedCodons = "GAU";
+        final List<String> expectedCodons = Collections.singletonList("GAU");
 
-        String codons = sut.codons(rnaSequence);
+        List<String> codons = sut.codons(rnaSequence);
 
         assertEquals(expectedCodons, codons);
     }
@@ -109,9 +110,9 @@ class DNAPipelineTest {
     @Test
     public void givenARnaSequenceComposedBy6NucleotidesWhenDivideItInCodonsThenReturnsATwoCodons() {
         final String rnaSequence = "GAUAUC";
-        final String expectedCodons = "GAU-AUC";
+        final List<String> expectedCodons = Arrays.asList("GAU","AUC");
 
-        String codons = sut.codons(rnaSequence);
+        List<String> codons = sut.codons(rnaSequence);
 
         assertEquals(expectedCodons, codons);
     }
@@ -119,9 +120,9 @@ class DNAPipelineTest {
     @Test
     public void givenARnaSequenceComposedBy8NucleotidesWhenDivideItInCodonsThenReturns2CodonsAndTheLast2NucleotidesAreDiscarded() {
         final String rnaSequence = "GAUAUCAA";
-        final String expectedCodons = "GAU-AUC";
+        final List<String> expectedCodons = Arrays.asList("GAU","AUC");
 
-        String codons = sut.codons(rnaSequence);
+        List<String> codons = sut.codons(rnaSequence);
 
         assertEquals(expectedCodons, codons);
     }
@@ -129,10 +130,10 @@ class DNAPipelineTest {
     @Test
     public void givenADnaSequenceWhenDivideItInCodonsByFrame1ThenIsNotDiscardedAnyNucleotideBeforeDivision() {
         final String dnaSequence = "TTATTTGGGCATCC";
-        final String expectedCodons = "TTA-TTT-GGG-CAT";
+        final List<String> expectedCodons = Arrays.asList("TTA","TTT","GGG","CAT");
         final int frame = 1;
 
-        String codons = sut.codonsByFrame(dnaSequence, frame);
+        List<String> codons = sut.sequenceCodonSplitting(dnaSequence, frame);
 
         assertEquals(expectedCodons, codons);
     }
@@ -140,10 +141,10 @@ class DNAPipelineTest {
     @Test
     public void givenADnaSequenceWhenDivideItInCodonsByFrame2ThenIsDiscardedTheFirstNucleotideBeforeDivision() {
         final String dnaSequence = "TTATTTGGGCATCC";
-        final String expectedCodons = "TAT-TTG-GGC-ATC";
+        final List<String> expectedCodons = Arrays.asList("TAT","TTG","GGC","ATC");
         final int frame = 2;
 
-        String codons = sut.codonsByFrame(dnaSequence, frame);
+        List<String> codons = sut.sequenceCodonSplitting(dnaSequence, frame);
 
         assertEquals(expectedCodons, codons);
     }
@@ -151,28 +152,28 @@ class DNAPipelineTest {
     @Test
     public void givenADnaSequenceWhenDivideItInCodonsByFrame3ThenIsDiscardedTheFirstTwoNucleotidesBeforeDivision() {
         final String dnaSequence = "TTATTTGGGCATCC";
-        final String expectedCodons = "ATT-TGG-GCA-TCC";
+        final List<String> expectedCodons = Arrays.asList("ATT","TGG","GCA","TCC");
         final int frame = 3;
 
-        String codons = sut.codonsByFrame(dnaSequence, frame);
+        List<String> codons = sut.sequenceCodonSplitting(dnaSequence, frame);
 
         assertEquals(expectedCodons, codons);
     }
 
     @Test
-    public void givenADnaSequenceWhenTranslateToProteinThenReturnsAProtein() {
-        final String dnaSequence = "TTATTTGGGCATCC";
-        final String expectedProtein = "GCPN";
+    public void givenADnaSequenceWhenTranslateIntoPolypeptidesThenReturnsAListOfPolypeptides() {
+        final String dna = "TTAGGGCATG";
+        final List<String> expectedPolypeptides = Arrays.asList("LGH","-GM","RA","HAL","MP-","CP");
 
-        String protein = sut.toProtein(dnaSequence);
+        List<String> polypeptides = sut.toPolypeptides(dna);
 
-        assertEquals(expectedProtein, protein);
+        assertEquals(expectedPolypeptides, polypeptides);
     }
 
     @ParameterizedTest(name = "#{index} - Codon \"{0}\" = Peptide \"{1}\"")
     @MethodSource("argumentsFromCodonToPeptide")
     public void codonsToPeptide(String codon, String expectedPeptide) {
-        String peptide = sut.toPeptide(codon);
+        String peptide = sut.fromCodonToPeptide(codon);
 
         assertEquals(expectedPeptide, peptide);
     }

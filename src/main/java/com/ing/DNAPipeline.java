@@ -1,6 +1,7 @@
 package com.ing;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DNAPipeline {
     private static final Map<Character, Character> RELATIONSHIP_BETWEEN_NUCLEOTIDES_FOR_ANTISENSE = new HashMap<>();
@@ -108,28 +110,41 @@ public class DNAPipeline {
                 .collect(Collectors.joining());
     }
 
-    public String codons(String rna) {
+    public List<String> codons(String rna) {
         return Arrays.stream(rna.split("(?<=\\G...)"))
                 .filter(codon -> codon.length() == 3)
-                .collect(Collectors.joining("-"));
+                .collect(Collectors.toList());
     }
 
-    public String toPeptide(String codon) {
+    public String fromCodonToPeptide(String codon) {
         return PEPTIDE_BY_CODONS.keySet().stream()
                 .filter(codons -> codons.contains(codon))
                 .map(PEPTIDE_BY_CODONS::get)
                 .collect(Collectors.joining());
     }
 
-    public String toProtein(String dna) {
-        final String rna = transcribe(dna);
-        return Arrays.stream(codons(rna).split("-"))
-                .map(this::toPeptide)
-                .map(PEPTIDES::get)
-                .collect(Collectors.joining());
+    public List<String> toPolypeptides(String dna) {
+        final String antiSense = antiSense(dna);
+        final String rnaFromAntisense = transcribe(antiSense);
+        final String rnaFromDna = transcribe(dna);
+        List<String> polypeptidesFromAntisense = toPolypeptidesByFrame(rnaFromAntisense);
+        List<String> polypeptidesFromRna = toPolypeptidesByFrame(rnaFromDna);
+        return Stream.of(polypeptidesFromAntisense, polypeptidesFromRna).flatMap(Collection::stream).collect(Collectors.toList());
     }
 
-    public String codonsByFrame(String dna, int frame) {
+    private List<String> toPolypeptidesByFrame(String sequence) {
+        return Stream.of(1, 2, 3)
+                .map(frame -> sequenceCodonSplitting(sequence, frame))
+                .map(this::polypeptideTranslation)
+                .collect(Collectors.toList());
+    }
+
+    private String polypeptideTranslation(List<String> codons) {
+        List<String> polypeptide = codons.stream().map(this::fromCodonToPeptide).collect(Collectors.toList());
+        return polypeptide.stream().map(PEPTIDES::get).collect(Collectors.joining());
+    }
+
+    public List<String> sequenceCodonSplitting(String dna, int frame) {
         final String dnaSequenceByFrame = dna.substring(frame-1);
         return codons(dnaSequenceByFrame);
     }
