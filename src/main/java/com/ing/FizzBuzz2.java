@@ -21,15 +21,7 @@ public class FizzBuzz2 {
                 element = "Buzz";
             }
 
-            if (number == 15) {
-                element = "FizzBuzz"; 
-            }
-
-            if (number == 30) {
-                element = "FizzBuzz"; 
-            }
-
-            if (number == 45) {
+            if (number % 15 == 0) {
                 element = "FizzBuzz"; 
             }
 
