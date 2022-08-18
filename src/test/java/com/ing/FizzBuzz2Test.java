@@ -21,4 +21,13 @@ public class FizzBuzz2Test {
         
         assertEquals(100, list.size());
     }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithTheOneInThePositionZero() {
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<Integer> list = sut.generate(); 
+    
+        assertEquals(1, list.get(0));
+    }
 }
