@@ -1,17 +1,24 @@
 package com.ing;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class FizzBuzz2 {
 
     private static final int NUM_OF_ELEMENTS = 100;
 
-    public List<Integer> generate() {
-        return IntStream.rangeClosed(1, NUM_OF_ELEMENTS)
-        .boxed()
-        .collect(Collectors.toList());
+    public List<String> generate() {
+        List<String> list = new ArrayList<>(NUM_OF_ELEMENTS);
+        for (int i = 0; i < NUM_OF_ELEMENTS; i++) {
+            int number = i+1; 
+            String element = String.valueOf(number);
+            
+            if (number == 3) {
+                element = "Fizz";
+            }
+            list.add(i, element);
+        }
+        return list;
     }
     
 }

@@ -17,7 +17,7 @@ public class FizzBuzz2Test {
     public void whenGenerateThenReturnsAListOfElements() {
         FizzBuzz2 sut = new FizzBuzz2();
         
-        List<Integer> list = sut.generate(); 
+        List<String> list = sut.generate(); 
         
         assertEquals(100, list.size());
     }
@@ -26,8 +26,18 @@ public class FizzBuzz2Test {
     public void whenGenerateFizzBuzzThenReturnAListWithTheOneInThePositionZero() {
         FizzBuzz2 sut = new FizzBuzz2();
         
-        List<Integer> list = sut.generate(); 
+        List<String> list = sut.generate(); 
     
-        assertEquals(1, list.get(0));
+        assertEquals("1", list.get(0));
+    }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithThreeIsRepresentedAsFizz() {
+        final int number = 3;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("Fizz", list.get(number - 1));
     }
 }
