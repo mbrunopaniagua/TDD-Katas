@@ -90,4 +90,34 @@ public class FizzBuzz2Test {
     
         assertEquals("Buzz", list.get(number - 1));
     }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithFifteenIsRepresentedAsFizzBuzz() {
+        final int number = 15;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("FizzBuzz", list.get(number - 1));
+    }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithThirtyIsRepresentedAsFizzBuzz() {
+        final int number = 30;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("FizzBuzz", list.get(number - 1));
+    }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithFortyFiveIsRepresentedAsFizzBuzz() {
+        final int number = 45;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("FizzBuzz", list.get(number - 1));
+    }
 }
