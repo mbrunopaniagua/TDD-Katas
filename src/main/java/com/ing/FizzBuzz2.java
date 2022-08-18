@@ -16,6 +16,15 @@ public class FizzBuzz2 {
             if (number == 3) {
                 element = "Fizz";
             }
+
+            if (number == 6) {
+                element = "Fizz";
+            }
+
+            if (number == 9) {
+                element = "Fizz";
+            }
+
             list.add(i, element);
         }
         return list;

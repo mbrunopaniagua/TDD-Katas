@@ -40,4 +40,24 @@ public class FizzBuzz2Test {
     
         assertEquals("Fizz", list.get(number - 1));
     }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithSixIsRepresentedAsFizz() {
+        final int number = 6;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("Fizz", list.get(number - 1));
+    }
+
+    @Test
+    public void whenGenerateFizzBuzzThenReturnAListWithNineIsRepresentedAsFizz() {
+        final int number = 9;
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<String> list = sut.generate(); 
+    
+        assertEquals("Fizz", list.get(number - 1));
+    }
 }
