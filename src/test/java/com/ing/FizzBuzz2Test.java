@@ -12,11 +12,11 @@ public class FizzBuzz2Test {
         FizzBuzz2 fizzBuzz = new FizzBuzz2();
         fizzBuzz.generate();
     }
-
+    
     @Test
-    public void whenGenerateThenReturnsAList() {
+    public void whenGenerateThenReturnsAListOf100Elements() {
         FizzBuzz2 fizzBuzz = new FizzBuzz2();
         List<Integer> list = fizzBuzz.generate(); 
-        assertEquals(0, list.size());
+        assertEquals(100, list.size());
     }
 }
