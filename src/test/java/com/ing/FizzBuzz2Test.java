@@ -9,14 +9,16 @@ import org.junit.jupiter.api.Test;
 public class FizzBuzz2Test {
     @Test
     public void respondsToGenerateMethod() {
-        FizzBuzz2 fizzBuzz = new FizzBuzz2();
-        fizzBuzz.generate();
+        FizzBuzz2 sut = new FizzBuzz2();
+        sut.generate();
     }
     
     @Test
-    public void whenGenerateThenReturnsAListOf100Elements() {
-        FizzBuzz2 fizzBuzz = new FizzBuzz2();
-        List<Integer> list = fizzBuzz.generate(); 
+    public void whenGenerateThenReturnsAListOfElements() {
+        FizzBuzz2 sut = new FizzBuzz2();
+        
+        List<Integer> list = sut.generate(); 
+        
         assertEquals(100, list.size());
     }
 }
