@@ -13,15 +13,7 @@ public class FizzBuzz2 {
             int number = i+1; 
             String element = String.valueOf(number);
             
-            if (number == 3) {
-                element = "Fizz";
-            }
-
-            if (number == 6) {
-                element = "Fizz";
-            }
-
-            if (number == 9) {
+            if (number % 3 == 0) {
                 element = "Fizz";
             }
 
